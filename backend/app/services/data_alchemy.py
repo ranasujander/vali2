@@ -99,12 +99,10 @@ def run(file_path: str, params: Dict[str, Any]) -> Dict[str, Any]:
     out_path = Path(file_path).with_name(Path(file_path).stem + "__cleaned.parquet")
     try:
         df.to_parquet(out_path)
-        saved_path = out_path.name
     except Exception:
-        # Fallback to CSV
-        out_csv = Path(file_path).with_name(Path(file_path).stem + "__cleaned.csv")
-        df.to_csv(out_csv, index=False)
-        saved_path = out_csv.name
+        # Fallback to CSV if parquet isn't supported
+        out_path = Path(file_path).with_name(Path(file_path).stem + "__cleaned.csv")
+        df.to_csv(out_path, index=False)
     return {
         "summary": "Data transformation pipeline executed",
         "file": file_path,
