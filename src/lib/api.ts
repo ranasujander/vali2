@@ -7,9 +7,10 @@ export const API_BASE: string =
   DEFAULT_BASE;
 
 async function http<T>(path: string, init?: RequestInit): Promise<T> {
+  const headers = { "Content-Type": "application/json", ...(init?.headers || {}) };
   const res = await fetch(`${API_BASE}${path}`, {
-    headers: { "Content-Type": "application/json", ...(init?.headers || {}) },
     ...init,
+    headers,
   });
   if (!res.ok) {
     const text = await res.text();
