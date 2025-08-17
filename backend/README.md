@@ -62,7 +62,7 @@ backend/
 ## API Overview (FastAPI)
 
 - Health: GET /health
-- Upload: POST /api/upload (multipart/form-data key: "file")
+- Upload: POST /api/upload (multipart/form-data key: "file"; optional "delimiter" and "sheet_name" for CSV and Excel files)
 - Tasks:
   - POST /api/tasks/data-alchemy
   - POST /api/tasks/neural-canvas
@@ -75,8 +75,12 @@ backend/
 ```
 curl -X POST http://localhost:8000/api/upload \
   -H "Content-Type: multipart/form-data" \
-  -F "file=@/path/to/your.csv"
+  -F "file=@/path/to/your.csv" \
+  -F "delimiter=," \
+  -F "sheet_name=Sheet1"
 ```
+
+Use the `delimiter` field for CSV files and `sheet_name` to target a sheet in Excel uploads.
 
 Response
 ```
